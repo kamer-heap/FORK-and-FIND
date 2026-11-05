@@ -66,15 +66,28 @@ require __DIR__ . '/../includes/header.php';
     <?php endforeach; ?>
 
     <?php if (currentRole() === 'student'): ?>
+    <?php
+        // The logged-in student's own review of this item (if any), to pre-fill the form.
+        $mine = null;
+        foreach ($reviewsByItem[$item['item_id']] ?? [] as $r) {
+            if ((int) $r['user_id'] === (int) $_SESSION['user_id']) { $mine = $r; break; }
+        }
+    ?>
     <form method="post" action="/review_add.php" class="inline-form"><?= csrfField() ?>
         <input type="hidden" name="item_id" value="<?= (int) $item['item_id'] ?>">
         <select name="rating" required>
             <option value="">Rating</option>
-            <?php for ($i = 5; $i >= 1; $i--): ?><option value="<?= $i ?>"><?= $i ?> star<?= $i > 1 ? 's' : '' ?></option><?php endfor; ?>
+            <?php for ($i = 5; $i >= 1; $i--): ?><option value="<?= $i ?>" <?= $mine && (int) $mine['rating'] === $i ? 'selected' : '' ?>><?= $i ?> star<?= $i > 1 ? 's' : '' ?></option><?php endfor; ?>
         </select>
-        <input type="text" name="comment" placeholder="Your review (optional)" maxlength="500">
-        <button type="submit">Submit review</button>
+        <input type="text" name="comment" placeholder="Your review (optional)" maxlength="500" value="<?= e($mine['comment'] ?? '') ?>">
+        <button type="submit"><?= $mine ? 'Update my review' : 'Submit review' ?></button>
     </form>
+    <?php if ($mine): ?>
+    <form method="post" action="/review_delete.php" class="inline-form"><?= csrfField() ?>
+        <input type="hidden" name="item_id" value="<?= (int) $item['item_id'] ?>">
+        <button type="submit">Delete my review</button>
+    </form>
+    <?php endif; ?>
     <?php elseif (!isLoggedIn()): ?>
         <p><small><a href="/login.php">Log in</a> as a student to review.</small></p>
     <?php endif; ?>
