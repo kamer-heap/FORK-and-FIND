@@ -19,13 +19,13 @@ A campus cafeteria guide for PUCIT. Search meals, compare prices and ratings, re
 ## Contents
 - [Why Fork & Find](#why-fork--find)
 - [Features](#features)
+- [Project structure](#project-structure)
 - [Roles and permissions](#roles-and-permissions)
 - [How it works](#how-it-works)
 - [Tech stack](#tech-stack)
 - [Security](#security)
 - [Database](#database)
 - [Quick start](#quick-start)
-- [Project structure](#project-structure)
 - [Roadmap](#roadmap)
 - [Team](#team)
 
@@ -42,6 +42,53 @@ Every department on campus has its own cafeteria, and there is no single place t
 | ✏️ | **Own reviews only:** a student can update or delete their own review |
 | 🚫 | **Sold-out toggle:** owners mark items unavailable in one click |
 | 🛡️ | **Admin tools:** approve owners, assign owners to cafeterias, remove reviews |
+
+## Project structure
+
+```
+fork-and-find/
+├── config/
+│   └── database.example.php     # copy to database.php (git-ignored)
+├── database/
+│   ├── schema.sql               # 4 tables
+│   ├── sample_data.sql          # demo data
+│   └── sample_data.php          # regenerates demo data with fresh hashes
+├── docs/
+│   ├── erd.md                   # ER diagram
+│   └── forkfind.local.conf      # Apache virtual host
+├── includes/
+│   ├── bootstrap.php            # session, DB, CSRF check, shared setup
+│   ├── auth.php                 # login helpers, requireLogin, requireRole
+│   ├── helpers.php              # escaping, flash messages, CSRF helpers
+│   ├── header.php
+│   └── footer.php
+├── public/                      # the only folder Apache serves
+│   ├── index.php                # home
+│   ├── search.php               # meal search
+│   ├── cafeteria.php            # cafeteria page, menu and reviews
+│   ├── login.php
+│   ├── signup.php
+│   ├── logout.php
+│   ├── review_add.php
+│   ├── review_delete.php
+│   ├── admin/
+│   │   ├── dashboard.php
+│   │   ├── cafeterias.php
+│   │   ├── owners.php
+│   │   └── reviews.php
+│   ├── owner/
+│   │   ├── dashboard.php
+│   │   ├── cafe_edit.php
+│   │   ├── menu_form.php
+│   │   ├── menu_delete.php
+│   │   ├── menu_toggle.php
+│   │   └── reviews.php
+│   └── css/
+│       └── style.css
+├── .gitignore
+├── README.md
+└── SETUP.md
+```
 
 ## Roles and permissions
 
@@ -122,20 +169,6 @@ Uncomment after the UI is finished and add images to docs/screenshots/.
 |---|---|---|
 | ![Search](docs/screenshots/search.png) | ![Cafeteria](docs/screenshots/cafeteria.png) | ![Owner](docs/screenshots/owner.png) |
 -->
-
-## Project structure
-
-```
-fork-and-find/
-├── config/       database settings (real config file is git-ignored)
-├── database/     schema.sql, sample_data.sql
-├── docs/         ER diagram, Apache virtual host file
-├── includes/     bootstrap, auth, helpers, header, footer
-└── public/       web root
-    ├── admin/    admin pages
-    ├── owner/    owner pages
-    └── css/      styles
-```
 
 ## Roadmap
 - [x] Database schema and sample data
