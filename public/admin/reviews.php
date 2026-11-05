@@ -35,7 +35,7 @@ require __DIR__ . '/../../includes/header.php';
         <strong><?= e($rev['item_name']) ?></strong> @ <?= e($rev['cafe_name']) ?> - <?= (int) $rev['rating'] ?>/5
         by <?= e($rev['reviewer']) ?> <small><?= e($rev['date']) ?></small><br>
         <?= e($rev['comment']) ?>
-        <form method="post" onsubmit="return confirm('Delete this review?');">
+        <form method="post" onsubmit="return confirm('Delete this review?');"><?= csrfField() ?>
             <input type="hidden" name="review_id" value="<?= (int) $rev['review_id'] ?>">
             <button type="submit" class="danger">Delete</button>
         </form>

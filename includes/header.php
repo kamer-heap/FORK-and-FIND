@@ -20,7 +20,7 @@ $flash = getFlash();
             <?php if (currentRole() === 'owner'): ?><a href="/owner/dashboard.php">My cafeteria</a><?php endif; ?>
             <?php if (currentRole() === 'admin'): ?><a href="/admin/dashboard.php">Admin</a><?php endif; ?>
             <span class="who"><?= e($_SESSION['name']) ?> (<?= e(currentRole()) ?>)</span>
-            <form method="post" action="/logout.php" class="logout"><button type="submit">Logout</button></form>
+            <form method="post" action="/logout.php" class="logout"><?= csrfField() ?><button type="submit">Logout</button></form>
         <?php else: ?>
             <a href="/login.php">Login</a>
             <a href="/signup.php">Sign up</a>

@@ -46,12 +46,12 @@ require __DIR__ . '/../../includes/header.php';
                 <td><?= $item['avg_rating'] !== null ? e((string) $item['avg_rating']) . ' (' . (int) $item['review_count'] . ')' : '-' ?></td>
                 <td><?= (int) $item['available'] ? 'Available' : 'Sold out' ?></td>
                 <td class="actions">
-                    <form method="post" action="/owner/menu_toggle.php">
+                    <form method="post" action="/owner/menu_toggle.php"><?= csrfField() ?>
                         <input type="hidden" name="item_id" value="<?= (int) $item['item_id'] ?>">
                         <button type="submit"><?= (int) $item['available'] ? 'Mark sold out' : 'Mark available' ?></button>
                     </form>
                     <a class="btn" href="/owner/menu_form.php?id=<?= (int) $item['item_id'] ?>">Edit</a>
-                    <form method="post" action="/owner/menu_delete.php" onsubmit="return confirm('Delete this item and its reviews?');">
+                    <form method="post" action="/owner/menu_delete.php" onsubmit="return confirm('Delete this item and its reviews?');"><?= csrfField() ?>
                         <input type="hidden" name="item_id" value="<?= (int) $item['item_id'] ?>">
                         <button type="submit" class="danger">Delete</button>
                     </form>

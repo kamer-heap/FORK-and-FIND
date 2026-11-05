@@ -44,8 +44,8 @@ require __DIR__ . '/../../includes/header.php';
             <td><?= (int) $o['is_approved'] ? 'Approved' : '<strong>Pending</strong>' ?></td>
             <td class="actions">
             <?php if (!(int) $o['is_approved']): ?>
-                <form method="post"><input type="hidden" name="user_id" value="<?= (int) $o['user_id'] ?>"><input type="hidden" name="action" value="approve"><button type="submit">Approve</button></form>
-                <form method="post" onsubmit="return confirm('Remove this request?');"><input type="hidden" name="user_id" value="<?= (int) $o['user_id'] ?>"><input type="hidden" name="action" value="reject"><button type="submit" class="danger">Reject</button></form>
+                <form method="post"><?= csrfField() ?><input type="hidden" name="user_id" value="<?= (int) $o['user_id'] ?>"><input type="hidden" name="action" value="approve"><button type="submit">Approve</button></form>
+                <form method="post" onsubmit="return confirm('Remove this request?');"><?= csrfField() ?><input type="hidden" name="user_id" value="<?= (int) $o['user_id'] ?>"><input type="hidden" name="action" value="reject"><button type="submit" class="danger">Reject</button></form>
             <?php endif; ?>
             </td>
         </tr>

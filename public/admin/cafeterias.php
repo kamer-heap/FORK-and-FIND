@@ -74,7 +74,7 @@ require __DIR__ . '/../../includes/header.php';
             <td><?= e($c['department']) ?></td>
             <td><?= e($c['location']) ?></td>
             <td>
-                <form method="post" class="inline-form">
+                <form method="post" class="inline-form"><?= csrfField() ?>
                     <input type="hidden" name="action" value="assign">
                     <input type="hidden" name="cafe_id" value="<?= (int) $c['cafe_id'] ?>">
                     <select name="owner_id">
@@ -87,7 +87,7 @@ require __DIR__ . '/../../includes/header.php';
                 </form>
             </td>
             <td>
-                <form method="post" onsubmit="return confirm('Delete this cafeteria, its menu and reviews?');">
+                <form method="post" onsubmit="return confirm('Delete this cafeteria, its menu and reviews?');"><?= csrfField() ?>
                     <input type="hidden" name="action" value="delete">
                     <input type="hidden" name="cafe_id" value="<?= (int) $c['cafe_id'] ?>">
                     <button type="submit" class="danger">Delete</button>
@@ -99,7 +99,7 @@ require __DIR__ . '/../../includes/header.php';
 </table>
 
 <h2>Add cafeteria</h2>
-<form method="post" class="card form">
+<form method="post" class="card form"><?= csrfField() ?>
     <input type="hidden" name="action" value="add">
     <label>Name <input type="text" name="name" value="<?= e($form['name']) ?>" required maxlength="100"></label>
     <label>Department <input type="text" name="department" value="<?= e($form['department']) ?>" required maxlength="100"></label>

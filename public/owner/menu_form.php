@@ -68,7 +68,7 @@ require __DIR__ . '/../../includes/header.php';
 ?>
 <h1><?= e($pageTitle) ?></h1>
 <?php foreach ($errors as $err): ?><div class="flash error"><?= e($err) ?></div><?php endforeach; ?>
-<form method="post" class="card form">
+<form method="post" class="card form"><?= csrfField() ?>
     <?php if ($itemId): ?><input type="hidden" name="id" value="<?= (int) $itemId ?>"><?php endif; ?>
     <label>Item name <input type="text" name="name" value="<?= e((string) $form['name']) ?>" required maxlength="100"></label>
     <label>Price (Rs) <input type="number" name="price" value="<?= e((string) $form['price']) ?>" required min="0" step="1"></label>

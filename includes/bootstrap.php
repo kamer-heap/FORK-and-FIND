@@ -18,3 +18,8 @@ session_start();
 require_once __DIR__ . '/../config/database.php';   // defines $pdo
 require_once __DIR__ . '/helpers.php';
 require_once __DIR__ . '/auth.php';
+
+// Every POST request must carry a valid CSRF token.
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    verifyCsrf();
+}

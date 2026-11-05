@@ -44,3 +44,26 @@ function textLength(string $value): int
 {
     return function_exists('mb_strlen') ? mb_strlen($value) : (int) preg_match_all('/./us', $value);
 }
+
+// CSRF protection: every POST form carries a secret token that other websites cannot guess.
+function csrfToken(): string
+{
+    if (empty($_SESSION['csrf'])) {
+        $_SESSION['csrf'] = bin2hex(random_bytes(32));
+    }
+    return $_SESSION['csrf'];
+}
+
+function csrfField(): string
+{
+    return '<input type="hidden" name="csrf" value="' . e(csrfToken()) . '">';
+}
+
+function verifyCsrf(): void
+{
+    $sent = $_POST['csrf'] ?? '';
+    if (!is_string($sent) || !hash_equals($_SESSION['csrf'] ?? '', $sent)) {
+        http_response_code(403);
+        exit('403 Forbidden: invalid or missing security token. Go back, reload the page and try again.');
+    }
+}

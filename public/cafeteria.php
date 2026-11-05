@@ -66,7 +66,7 @@ require __DIR__ . '/../includes/header.php';
     <?php endforeach; ?>
 
     <?php if (currentRole() === 'student'): ?>
-    <form method="post" action="/review_add.php" class="inline-form">
+    <form method="post" action="/review_add.php" class="inline-form"><?= csrfField() ?>
         <input type="hidden" name="item_id" value="<?= (int) $item['item_id'] ?>">
         <select name="rating" required>
             <option value="">Rating</option>

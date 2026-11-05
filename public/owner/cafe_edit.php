@@ -40,7 +40,7 @@ require __DIR__ . '/../../includes/header.php';
 ?>
 <h1>Edit cafeteria info</h1>
 <?php foreach ($errors as $err): ?><div class="flash error"><?= e($err) ?></div><?php endforeach; ?>
-<form method="post" class="card form">
+<form method="post" class="card form"><?= csrfField() ?>
     <label>Name <input type="text" name="name" value="<?= e($form['name']) ?>" required maxlength="100"></label>
     <label>Department <input type="text" name="department" value="<?= e($form['department']) ?>" required maxlength="100"></label>
     <label>Location <input type="text" name="location" value="<?= e($form['location']) ?>" required maxlength="150"></label>
