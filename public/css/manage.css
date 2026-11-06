@@ -21,6 +21,10 @@
 .ow-section h2 { margin:0; font-size:28px; font-weight:600; line-height:1.45; color:#174c36; }
 .ow-feed { display:flex; flex-direction:column; gap:20px; }
 .ow-label { margin:0; font-size:14px; font-weight:500; line-height:1.45; color:#174c36; }
+.ow-summary { display:flex; flex-direction:column; gap:8px; }
+.ow-summary p { margin:0; font-size:14px; line-height:1.45; }
+.ow-summary .ow-summary-main { font-weight:500; color:#174c36; }
+.ow-summary .ow-summary-note { color:#777970; }
 
 /* manage menu table */
 .om-table { background:#fff; border:1px solid #e7e3db; border-radius:13px; box-shadow:0 3px 10px rgba(61,64,31,.09); overflow:hidden; }

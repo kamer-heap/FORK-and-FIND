@@ -2,6 +2,10 @@
 config/database.php
 .env
 
+# Uploaded photos (added by owners and admins on the live site)
+public/uploads/*
+!public/uploads/.gitkeep
+
 # Editor / OS
 .vscode/
 .idea/

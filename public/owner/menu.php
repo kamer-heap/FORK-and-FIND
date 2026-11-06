@@ -8,9 +8,9 @@ if (!$cafe) {
     redirect('/owner/dashboard.php');
 }
 
-// Same query that used to live on the dashboard (moved here, unchanged).
+// Same query that used to live on the dashboard (moved here, now also reading the photo).
 $stmt = $pdo->prepare(
-    'SELECT m.item_id, m.name, m.price, m.category, m.available,
+    'SELECT m.item_id, m.name, m.price, m.category, m.available, m.image,
             ROUND(AVG(r.rating), 1) AS avg_rating, COUNT(r.review_id) AS review_count
      FROM Menu_Items m
      LEFT JOIN Reviews r ON r.item_id = m.item_id

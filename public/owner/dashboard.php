@@ -54,7 +54,7 @@ require __DIR__ . '/../../includes/header.php';
         <div class="ow-identity">
             <h2 class="ow-cafe-name"><?= e($cafe['name']) ?></h2>
             <p class="ow-cafe-place"><?= e($cafe['department']) ?> &middot; <?= e($cafe['location']) ?></p>
-            <p class="ow-cafe-time"><?= e($cafe['timings']) ?></p>
+            <p class="ow-cafe-time"><?= e(cafeHours($cafe)) ?></p>
         </div>
         <a class="mr-btn" href="/owner/cafe_edit.php">Edit Cafeteria</a>
     </section>

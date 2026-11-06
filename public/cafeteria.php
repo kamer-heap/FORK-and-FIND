@@ -16,14 +16,14 @@ if (!$cafe) {
 }
 
 $stmt = $pdo->prepare(
-    'SELECT m.item_id, m.name, m.price, m.category, m.available,
+    'SELECT m.item_id, m.name, m.price, m.category, m.available, m.image,
             ROUND(AVG(r.rating), 1) AS avg_rating, COUNT(r.review_id) AS review_count
      FROM Menu_Items m
      LEFT JOIN Reviews r ON r.item_id = m.item_id
      WHERE m.cafe_id = :id
      GROUP BY m.item_id
      ORDER BY m.category, m.name'
-);
+);                                                                    // CHANGED: m.image
 $stmt->execute([':id' => $cafeId]);
 $items = $stmt->fetchAll();
 

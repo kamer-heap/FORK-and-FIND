@@ -1,5 +1,5 @@
 <?php
-// Expects $pageTitle (optional), $mainClass (optional) and $extraCss (optional, e.g. 'manage.css'). Included after bootstrap.php.
+// Expects $pageTitle (optional), $mainClass (optional) and $extraCss (optional, e.g. 'manage.css,form.css'). Included after bootstrap.php.
 $flash = getFlash();
 ?>
 <!DOCTYPE html>
@@ -12,7 +12,8 @@ $flash = getFlash();
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
     <link rel="stylesheet" href="/css/style.css">
-    <?php if (!empty($extraCss)): ?><link rel="stylesheet" href="/css/<?= e($extraCss) ?>"><?php endif; ?>
+    <?php foreach (array_filter(explode(',', (string) ($extraCss ?? ''))) as $css): ?><link rel="stylesheet" href="/css/<?= e(trim($css)) ?>">
+    <?php endforeach; ?>
 </head>
 <body>
 <header class="site-header">

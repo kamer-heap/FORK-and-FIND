@@ -1,9 +1,9 @@
 <?php
 require_once __DIR__ . '/../includes/bootstrap.php';
 
-// All cafeterias with their average item rating (unchanged query).
+// All cafeterias with their average item rating (unchanged query, plus days and photo).
 $cafes = $pdo->query(
-    'SELECT c.cafe_id, c.name, c.department, c.location, c.timings,
+    'SELECT c.cafe_id, c.name, c.department, c.location, c.timings, c.days, c.image,
             COUNT(DISTINCT m.item_id) AS item_count,
             ROUND(AVG(r.rating), 1) AS avg_rating
      FROM Cafeterias c
@@ -11,11 +11,11 @@ $cafes = $pdo->query(
      LEFT JOIN Reviews r ON r.item_id = m.item_id
      GROUP BY c.cafe_id
      ORDER BY c.name'
-)->fetchAll();
+)->fetchAll();                                                        // CHANGED: c.days, c.image
 
 // NEW (read-only): the 3 best-rated meals, for the "Good meals" section.
 $topMeals = $pdo->query(
-    'SELECT m.item_id, m.name, m.price, c.cafe_id, c.name AS cafe_name,
+    'SELECT m.item_id, m.name, m.price, m.image, c.cafe_id, c.name AS cafe_name,
             ROUND(AVG(r.rating), 1) AS avg_rating, COUNT(r.review_id) AS review_count
      FROM Menu_Items m
      JOIN Cafeterias c ON c.cafe_id = m.cafe_id
@@ -23,7 +23,7 @@ $topMeals = $pdo->query(
      GROUP BY m.item_id, c.cafe_id
      ORDER BY avg_rating DESC, review_count DESC, m.price ASC
      LIMIT 3'
-)->fetchAll();
+)->fetchAll();                                                        // CHANGED: m.image
 
 // "Popular" badge goes to the best-rated cafeteria.
 $popularId = null;
@@ -76,7 +76,7 @@ $clock = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="cu
             <div class="tile-body">
                 <h3><?= e($c['name']) ?></h3>
                 <p><?= $pin ?> <?= e($c['department']) ?> | <?= e($c['location']) ?></p>
-                <p><?= $clock ?> <?= e($c['timings']) ?></p>
+                <p><?= $clock ?> <?= e(cafeHours($c)) ?></p>
                 <p class="tile-meta"><?= (int) $c['item_count'] ?> items |
                     <?= $c['avg_rating'] !== null ? '&#9733; ' . e((string) $c['avg_rating']) : 'no reviews yet' ?></p>
                 <span class="tile-link">View Menu &rarr;</span>

@@ -5,13 +5,13 @@ $q        = trim($_GET['q'] ?? '');
 $maxPrice = $_GET['max_price'] ?? '';
 $minRate  = $_GET['min_rating'] ?? '';
 
-$sql = 'SELECT m.item_id, m.name AS item_name, m.price, m.available,
+$sql = 'SELECT m.item_id, m.name AS item_name, m.price, m.available, m.image,
                c.cafe_id, c.name AS cafe_name, c.department,
                ROUND(AVG(r.rating), 1) AS avg_rating, COUNT(r.review_id) AS review_count
         FROM Menu_Items m
         JOIN Cafeterias c ON c.cafe_id = m.cafe_id
         LEFT JOIN Reviews r ON r.item_id = m.item_id
-        WHERE 1 = 1';
+        WHERE 1 = 1';                                                 // CHANGED: m.image
 $params = [];
 
 if ($q !== '') {

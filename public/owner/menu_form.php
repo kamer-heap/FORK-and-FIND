@@ -9,27 +9,34 @@ if (!$cafe) {
     redirect('/owner/dashboard.php');
 }
 
-$itemId = null;
-$form = ['name' => '', 'price' => '', 'category' => ''];
+$itemId   = null;
+$existing = null;
+$form = ['name' => '', 'price' => '', 'category' => '', 'description' => ''];
 
 if (isset($_REQUEST['id'])) {
     $itemId = intOrNull($_REQUEST['id']);
     // Load only if the item belongs to THIS owner's cafeteria.
-    $stmt = $pdo->prepare('SELECT item_id, name, price, category FROM Menu_Items WHERE item_id = :id AND cafe_id = :cafe');
+    $stmt = $pdo->prepare('SELECT item_id, name, price, category, description, image FROM Menu_Items WHERE item_id = :id AND cafe_id = :cafe');
     $stmt->execute([':id' => $itemId, ':cafe' => $cafe['cafe_id']]);
     $existing = $stmt->fetch();
     if ($itemId === null || !$existing) {
         http_response_code(404);
         exit('Menu item not found.');
     }
-    $form = ['name' => $existing['name'], 'price' => $existing['price'], 'category' => $existing['category']];
+    $form = [
+        'name'        => $existing['name'],
+        'price'       => $existing['price'],
+        'category'    => $existing['category'],
+        'description' => (string) ($existing['description'] ?? ''),
+    ];
 }
 
 $errors = [];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $form['name']     = trim($_POST['name'] ?? '');
-    $form['price']    = trim($_POST['price'] ?? '');
-    $form['category'] = trim($_POST['category'] ?? '');
+    $form['name']        = trim($_POST['name'] ?? '');
+    $form['price']       = trim($_POST['price'] ?? '');
+    $form['category']    = trim($_POST['category'] ?? '');
+    $form['description'] = trim($_POST['description'] ?? '');
 
     if ($form['name'] === '' || textLength($form['name']) > 100) {
         $errors[] = 'Item name is required (max 100 characters).';
@@ -40,20 +47,58 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($form['category'] === '' || textLength($form['category']) > 50) {
         $errors[] = 'Category is required (max 50 characters).';
     }
+    if (textLength($form['description']) > 500) {
+        $errors[] = 'Description can be at most 500 characters.';
+    }
+
+    // NEW optional photo upload (checked and saved by saveUploadedImage()).
+    $newImage = null;
+    if (!$errors) {
+        [$newImage, $imageError] = saveUploadedImage('image');
+        if ($imageError !== null) {
+            $errors[] = $imageError;
+        }
+    }
 
     if (!$errors) {
+        $description = $form['description'] === '' ? null : $form['description'];
         try {
             if ($itemId === null) {
-                $stmt = $pdo->prepare('INSERT INTO Menu_Items (cafe_id, name, price, category) VALUES (:cafe, :name, :price, :category)');
-                $stmt->execute([':cafe' => $cafe['cafe_id']] + [':name' => $form['name'], ':price' => $form['price'], ':category' => $form['category']]);
+                $stmt = $pdo->prepare('INSERT INTO Menu_Items (cafe_id, name, price, category, description, image) VALUES (:cafe, :name, :price, :category, :description, :image)');
+                $stmt->execute([
+                    ':cafe'        => $cafe['cafe_id'],
+                    ':name'        => $form['name'],
+                    ':price'       => $form['price'],
+                    ':category'    => $form['category'],
+                    ':description' => $description,
+                    ':image'       => $newImage,
+                ]);
                 setFlash('success', 'Item added.');
             } else {
-                $stmt = $pdo->prepare('UPDATE Menu_Items SET name = :name, price = :price, category = :category WHERE item_id = :id AND cafe_id = :cafe');
-                $stmt->execute([':name' => $form['name'], ':price' => $form['price'], ':category' => $form['category'], ':id' => $itemId, ':cafe' => $cafe['cafe_id']]);
+                $sql = 'UPDATE Menu_Items SET name = :name, price = :price, category = :category, description = :description'
+                     . ($newImage !== null ? ', image = :image' : '')
+                     . ' WHERE item_id = :id AND cafe_id = :cafe';
+                $params = [
+                    ':name'        => $form['name'],
+                    ':price'       => $form['price'],
+                    ':category'    => $form['category'],
+                    ':description' => $description,
+                    ':id'          => $itemId,
+                    ':cafe'        => $cafe['cafe_id'],
+                ];
+                if ($newImage !== null) {
+                    $params[':image'] = $newImage;
+                }
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute($params);
+                if ($newImage !== null) {
+                    deleteUploadedImage($existing['image'] ?? null);   // remove the old photo file
+                }
                 setFlash('success', 'Item updated.');
             }
-            redirect('/owner/dashboard.php');
+            redirect('/owner/menu.php');
         } catch (PDOException $ex) {
+            deleteUploadedImage($newImage);                  // do not keep a photo for an item that was not saved
             if ($ex->getCode() === '23000') {              // duplicate (cafe_id, name)
                 $errors[] = 'You already have an item with that name.';
             } else {
@@ -64,16 +109,68 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $pageTitle = $itemId ? 'Edit menu item' : 'Add menu item';
+$mainClass = 'account owner-page';
+$extraCss  = 'manage.css,form.css';
 require __DIR__ . '/../../includes/header.php';
 ?>
-<h1><?= e($pageTitle) ?></h1>
-<?php foreach ($errors as $err): ?><div class="flash error"><?= e($err) ?></div><?php endforeach; ?>
-<form method="post" class="card form"><?= csrfField() ?>
-    <?php if ($itemId): ?><input type="hidden" name="id" value="<?= (int) $itemId ?>"><?php endif; ?>
-    <label>Item name <input type="text" name="name" value="<?= e((string) $form['name']) ?>" required maxlength="100"></label>
-    <label>Price (Rs) <input type="number" name="price" value="<?= e((string) $form['price']) ?>" required min="0" step="1"></label>
-    <label>Category <input type="text" name="category" value="<?= e((string) $form['category']) ?>" required maxlength="50" placeholder="e.g. Rice, Chinese, Drinks"></label>
-    <button type="submit">Save</button>
-    <a href="/owner/dashboard.php">Cancel</a>
-</form>
+<div class="rf-wrap ow-wrap">
+    <div class="rf-intro">
+        <p class="of-crumb"><?= $itemId ? 'Menu / Edit item' : 'Menu / Add item' ?></p>
+        <h1><?= $itemId ? 'Edit Menu Item' : 'Add Menu Item' ?></h1>
+        <p class="ow-sub"><?= $itemId ? 'Update the details students see for this meal.' : 'Add a meal, set its price and help students discover it.' ?></p>
+    </div>
+
+    <form method="post" enctype="multipart/form-data" class="of-card"><?= csrfField() ?>
+        <?php if ($itemId): ?><input type="hidden" name="id" value="<?= (int) $itemId ?>"><?php endif; ?>
+        <h2>Meal information</h2>
+        <?php foreach ($errors as $err): ?><div class="flash error"><?= e($err) ?></div><?php endforeach; ?>
+
+        <div class="of-field">
+            <label class="of-label" for="name">Food name</label>
+            <input class="of-input" type="text" id="name" name="name" value="<?= e((string) $form['name']) ?>" required maxlength="100" placeholder="e.g. Chicken Biryani">
+        </div>
+        <div class="of-field">
+            <label class="of-label" for="price">Price (PKR)</label>
+            <input class="of-input" type="number" id="price" name="price" value="<?= e((string) $form['price']) ?>" required min="0" step="1" placeholder="e.g. 250">
+        </div>
+        <div class="of-field">
+            <label class="of-label" for="category">Category</label>
+            <input class="of-input" type="text" id="category" name="category" value="<?= e((string) $form['category']) ?>" required maxlength="50" placeholder="e.g. Rice, Chinese, Drinks">
+        </div>
+        <div class="of-field">
+            <label class="of-label" for="description">Description (optional)</label>
+            <textarea class="of-textarea" id="description" name="description" maxlength="500" placeholder="A short description of the meal."><?= e((string) $form['description']) ?></textarea>
+        </div>
+
+        <div class="of-field">
+            <span class="of-label">Food image (optional)</span>
+            <div class="of-image">
+                <?php if ($existing): ?>
+                    <img class="of-preview" id="image-preview" src="<?= e(mealImage($existing)) ?>" alt="Current meal image">
+                <?php endif; ?>
+                <input class="visually-hidden of-file-input" type="file" id="image" name="image" accept="image/jpeg,image/png,image/webp">
+                <label class="mr-btn of-file" for="image"><?= $existing ? 'Change Image' : 'Choose Image' ?></label>
+                <p class="of-hint" id="image-note">JPG, PNG or WebP, up to 2 MB. Use a clear, natural food photograph.</p>
+            </div>
+        </div>
+
+        <div class="of-actions">
+            <button type="submit" class="mr-btn is-primary">Save Item</button>
+            <a class="mr-btn" href="/owner/menu.php">Cancel</a>
+        </div>
+    </form>
+</div>
+<script>
+// UI only: show the chosen file name and a preview before saving.
+(function () {
+    var input = document.getElementById('image'), note = document.getElementById('image-note'), prev = document.getElementById('image-preview');
+    if (!input) return;
+    input.addEventListener('change', function () {
+        var f = input.files && input.files[0];
+        if (!f) return;
+        if (note) note.textContent = 'Selected \u00b7 ' + f.name;
+        if (prev) prev.src = URL.createObjectURL(f);
+    });
+})();
+</script>
 <?php require __DIR__ . '/../../includes/footer.php'; ?>
