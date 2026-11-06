@@ -22,4 +22,4 @@ $stmt = $pdo->prepare('DELETE FROM Reviews WHERE item_id = :item AND user_id = :
 $stmt->execute([':item' => $itemId, ':user' => $_SESSION['user_id']]);
 
 setFlash($stmt->rowCount() ? 'success' : 'error', $stmt->rowCount() ? 'Your review was deleted.' : 'You have no review on this item.');
-redirect('/cafeteria.php?id=' . (int) $item['cafe_id']);
+redirect('/my_reviews.php');                      // back to the student's own list

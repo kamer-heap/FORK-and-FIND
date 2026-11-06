@@ -26,7 +26,11 @@ $flash = getFlash();
         <?php if (isLoggedIn()): ?>
             <?php if (currentRole() === 'owner'): ?><a href="/owner/dashboard.php">My cafeteria</a><?php endif; ?>
             <?php if (currentRole() === 'admin'): ?><a href="/admin/dashboard.php">Admin</a><?php endif; ?>
-            <span class="who"><?= e($_SESSION['name']) ?> (<?= e(currentRole()) ?>)</span>
+            <?php if (currentRole() === 'student'): ?>
+                <a class="who" href="/my_reviews.php" title="My reviews"><?= e($_SESSION['name']) ?> (<?= e(currentRole()) ?>)</a>
+            <?php else: ?>
+                <span class="who"><?= e($_SESSION['name']) ?> (<?= e(currentRole()) ?>)</span>
+            <?php endif; ?>
             <form method="post" action="/logout.php" class="logout"><?= csrfField() ?><button type="submit">Logout</button></form>
         <?php else: ?>
             <a href="/signup.php">Sign up</a>
