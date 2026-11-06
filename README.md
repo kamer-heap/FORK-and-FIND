@@ -1,7 +1,7 @@
 <div align="center">
 
 # 🍴 Fork & Find
-
+ 
 **Find the best meal in your department cafeteria, before you walk there.**
 
 A campus cafeteria guide for PUCIT. Search meals, compare prices and ratings, read honest reviews. Cafeteria owners run their own menu. Admins keep it clean.
