@@ -183,3 +183,49 @@ main.wide { max-width:none; margin:0; padding:2.2rem clamp(1rem,5vw,4.5rem) 1rem
 .review-text { margin:.2rem 0; }
 .review-date { font-size:.7rem; color:#8a8f88; }
 @media (max-width:680px) { .tiles.two { grid-template-columns:1fr; } }
+/* ---- Login and Signup pages ---- */
+main.account { padding:56px clamp(32px,6.67vw,96px) 16px; }
+main.account > .flash { max-width:1248px; margin:0 auto 24px; }
+.account-grid { display:grid; grid-template-columns:minmax(0,596fr) minmax(0,556fr); gap:clamp(32px,6.67vw,96px); max-width:1248px; margin:0 auto; align-items:start; }
+.welcome { display:flex; flex-direction:column; gap:20px; min-width:0; }
+.welcome h1 { margin:0; font-size:56px; font-weight:700; line-height:1.05; letter-spacing:-.02em; color:#174c36; }
+.welcome-sub { margin:0; font-size:18px; line-height:1.45; color:#202b24; }
+.welcome-photo { display:block; width:100%; height:420px; object-fit:cover; border-radius:13px; }
+.account-signup .welcome-sub { font-size:16px; }
+.account-signup .welcome-photo { border-radius:8px; }
+.form-card { display:flex; flex-direction:column; gap:24px; min-width:0; background:#fff; padding:28px 24px; border-radius:13px; box-shadow:0 3px 10px rgba(61,64,31,.09); }
+.account-login .form-card { border:1px solid #e7e3db; }
+.form-card h2 { margin:0; font-size:24px; font-weight:600; line-height:1.45; color:#174c36; }
+.form-card .flash { margin:0; }
+.acct-field { display:flex; flex-direction:column; gap:8px; margin:0; }
+.acct-label { font-size:14px; font-weight:500; line-height:1.45; color:#282b27; }
+.account-login .acct-label { color:#174c36; }
+.acct-input, .acct-input-wrap { width:100%; background:#fff; border:1px solid #e7e3db; border-radius:6px; font-family:Inter, system-ui, Arial, sans-serif; font-size:14px; font-weight:400; line-height:1.45; color:#282b27; }
+.acct-input { display:block; margin:0; padding:14px; }
+.acct-input::placeholder, .acct-input-wrap input::placeholder { color:#777970; opacity:1; }
+.acct-input-wrap { display:flex; align-items:center; gap:16px; padding:0 14px; }
+.acct-input-wrap input { flex:1; min-width:0; margin:0; padding:14px 0; border:0; background:transparent; font:inherit; color:inherit; outline:0; }
+.acct-input:focus, .acct-input-wrap:focus-within { outline:2px solid var(--sage); border-color:var(--accent); }
+.acct-select { appearance:none; -webkit-appearance:none; padding-right:40px; background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%23234b36' stroke-width='2'%3E%3Cpath d='m1 1 5 5 5-5'/%3E%3C/svg%3E") no-repeat right 14px center; }
+.pw-toggle, .pw-toggle:hover { padding:0; background:none; border-radius:0; color:#174c36; font-family:inherit; font-size:14px; font-weight:500; line-height:1.45; }
+.pw-toggle:hover { text-decoration:underline; }
+.acct-hint { margin:0; font-size:12px; line-height:1.45; color:#777970; }
+.form-card .btn-block { display:block; width:100%; padding:14px 22px; border-radius:6px; font-size:14px; font-weight:600; line-height:1.45; text-align:center; }
+.account-signup .btn-block { border-radius:18px; }
+.form-switch { margin:0; font-size:14px; font-weight:500; line-height:1.45; color:#174c36; }
+.form-switch a { color:inherit; text-decoration:none; }
+.form-switch a:hover { text-decoration:underline; }
+@media (max-width:900px) {
+    main.account { padding:56px 32px 16px; }
+    .account-grid { grid-template-columns:minmax(0,1fr); gap:32px; }
+    .welcome h1 { font-size:38px; }
+    .welcome-photo { height:260px; }
+    .account-signup .welcome-sub { color:#777970; }
+}
+@media (max-width:600px) {
+    main.account { padding:32px 20px 16px; }
+    .welcome h1 { font-size:32px; }
+    .welcome-photo { height:180px; }
+    .account-signup .welcome-sub { color:#202b24; }
+    .account-login .form-card { border-color:transparent; }
+}

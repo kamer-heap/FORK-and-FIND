@@ -32,14 +32,45 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $pageTitle = 'Login';
+$mainClass = 'account account-login';
 require __DIR__ . '/../includes/header.php';
 ?>
-<h1>Login</h1>
-<?php foreach ($errors as $err): ?><div class="flash error"><?= e($err) ?></div><?php endforeach; ?>
-<form method="post" class="card form"><?= csrfField() ?>
-    <label>Email <input type="email" name="email" value="<?= e($email) ?>" required maxlength="150"></label>
-    <label>Password <input type="password" name="password" required></label>
-    <button type="submit">Log in</button>
-</form>
-<p>No account? <a href="/signup.php">Sign up</a></p>
+<div class="account-grid">
+    <section class="welcome">
+        <h1>Welcome back.</h1>
+        <p class="welcome-sub">Find your next campus meal.</p>
+        <img class="welcome-photo" src="/img/meal-biryani.png" alt="Chicken biryani with raita on a plate">
+    </section>
+
+    <form method="post" class="form-card"><?= csrfField() ?>
+        <h2>Login</h2>
+        <?php foreach ($errors as $err): ?><div class="flash error"><?= e($err) ?></div><?php endforeach; ?>
+        <label class="acct-field">
+            <span class="acct-label">Email address</span>
+            <input class="acct-input" type="email" name="email" value="<?= e($email) ?>" placeholder="you@university.edu" required maxlength="150" autocomplete="email">
+        </label>
+        <div class="acct-field">
+            <label class="acct-label" for="password">Password</label>
+            <div class="acct-input-wrap">
+                <input id="password" type="password" name="password" placeholder="Enter password" required autocomplete="current-password">
+                <button type="button" class="pw-toggle" hidden>Show</button>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-block">Login</button>
+        <p class="form-switch">New to FORK &amp; FIND? <a href="/signup.php">Signup &rarr;</a></p>
+    </form>
+</div>
+
+<script>
+// UI only: "Show / Hide" button for the password box (stays hidden when JavaScript is off).
+document.querySelectorAll('.pw-toggle').forEach(function (btn) {
+    var input = btn.parentNode.querySelector('input');
+    btn.hidden = false;
+    btn.addEventListener('click', function () {
+        var show = input.type === 'password';
+        input.type = show ? 'text' : 'password';
+        btn.textContent = show ? 'Hide' : 'Show';
+    });
+});
+</script>
 <?php require __DIR__ . '/../includes/footer.php'; ?>
