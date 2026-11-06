@@ -67,3 +67,28 @@ function verifyCsrf(): void
         exit('403 Forbidden: invalid or missing security token. Go back, reload the page and try again.');
     }
 }
+
+
+// ---- UI helpers (redesign): pictures only, no effect on the application logic ----
+
+// Cafeteria picture. Uses an uploaded file if the row has an 'image' value,
+// otherwise one of the three default cafe pictures (chosen by cafe_id).
+function cafeImage(array $cafe): string
+{
+    if (!empty($cafe['image'])) {
+        return '/uploads/' . rawurlencode((string) $cafe['image']);
+    }
+    $defaults = ['cafe-central.png', 'cafe-engineering.png', 'cafe-garden.png'];
+    return '/img/' . $defaults[((int) ($cafe['cafe_id'] ?? 1) - 1) % 3];
+}
+
+// Meal picture. Uses an uploaded file if the row has an 'image' value,
+// otherwise one of the default meal pictures (chosen by item_id).
+function mealImage(array $item): string
+{
+    if (!empty($item['image'])) {
+        return '/uploads/' . rawurlencode((string) $item['image']);
+    }
+    $defaults = ['meal-biryani.png', 'meal-wrap.png', 'meal-daal.png'];
+    return '/img/' . $defaults[((int) ($item['item_id'] ?? 1) - 1) % 3];
+}
