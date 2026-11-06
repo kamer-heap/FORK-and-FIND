@@ -36,38 +36,60 @@ $stmt->execute($params);
 $results = $stmt->fetchAll();
 
 $pageTitle = 'Search meals';
+$mainClass = 'wide';
 require __DIR__ . '/../includes/header.php';
+
+$total = count($results);
 ?>
-<h1>Search meals</h1>
-<form method="get" class="inline-form">
-    <input type="text" name="q" value="<?= e($q) ?>" placeholder="Meal name, e.g. biryani" maxlength="100">
-    <input type="number" name="max_price" value="<?= e((string) $maxPrice) ?>" placeholder="Max price (Rs)" min="0" step="1">
-    <select name="min_rating">
-        <option value="">Any rating</option>
-        <?php for ($i = 5; $i >= 1; $i--): ?>
-            <option value="<?= $i ?>" <?= (string) $minRate === (string) $i ? 'selected' : '' ?>><?= $i ?>+ stars</option>
-        <?php endfor; ?>
-    </select>
-    <button type="submit">Search</button>
+<h1 class="page-title">Find your next meal</h1>
+<p class="page-sub">Explore campus food that fits your taste and budget.</p>
+
+<form method="get" class="filter-form">
+    <div class="field field-search">
+        <input type="text" name="q" value="<?= e($q) ?>" placeholder="Search meals by name" maxlength="100" aria-label="Search meals by name">
+    </div>
+    <label class="field">Maximum price (PKR)
+        <input type="number" name="max_price" value="<?= e((string) $maxPrice) ?>" placeholder="Any price" min="0" step="1">
+    </label>
+    <label class="field">Minimum star rating
+        <select name="min_rating">
+            <option value="">All ratings</option>
+            <?php for ($i = 5; $i >= 1; $i--): ?>
+                <option value="<?= $i ?>" <?= (string) $minRate === (string) $i ? 'selected' : '' ?>><?= $i ?>+ stars</option>
+            <?php endfor; ?>
+        </select>
+    </label>
+    <button type="submit" class="visually-hidden">Search</button>
 </form>
 
+<p class="result-count"><?= $total ?> meal<?= $total === 1 ? '' : 's' ?> around campus</p>
+
 <?php if (!$results): ?>
-    <p>No matching meals found.</p>
+    <div class="empty-state">No matching meals found.</div>
 <?php else: ?>
-<table>
-    <thead><tr><th>Meal</th><th>Cafeteria</th><th>Price</th><th>Rating</th><th>Status</th></tr></thead>
-    <tbody>
+<div class="tiles three">
     <?php foreach ($results as $row): ?>
-        <tr>
-            <td><?= e($row['item_name']) ?></td>
-            <td><a href="/cafeteria.php?id=<?= (int) $row['cafe_id'] ?>"><?= e($row['cafe_name']) ?></a>
-                <small>(<?= e($row['department']) ?>)</small></td>
-            <td>Rs <?= e(number_format((float) $row['price'], 0)) ?></td>
-            <td><?= $row['avg_rating'] !== null ? e((string) $row['avg_rating']) . ' (' . (int) $row['review_count'] . ')' : '-' ?></td>
-            <td><?= (int) $row['available'] ? 'Available' : '<span class="muted">Sold out</span>' ?></td>
-        </tr>
+        <a class="tile" href="/cafeteria.php?id=<?= (int) $row['cafe_id'] ?>">
+            <div class="tile-photo">
+                <img src="<?= e(mealImage($row)) ?>" alt="<?= e($row['item_name']) ?>" loading="lazy">
+                <?php if (!(int) $row['available']): ?><span class="badge badge-off">Sold out</span><?php endif; ?>
+            </div>
+            <div class="tile-body">
+                <h3><?= e($row['item_name']) ?></h3>
+                <p class="muted"><?= e($row['cafe_name']) ?></p>
+                <p class="price-row"><strong>PKR <?= e(number_format((float) $row['price'], 0)) ?></strong>
+                    <span><?= $row['avg_rating'] !== null ? '&#9733; ' . e((string) $row['avg_rating']) . ' (' . (int) $row['review_count'] . ')' : 'No reviews yet' ?></span></p>
+                <span class="tile-link">View Meal &rarr;</span>
+            </div>
+        </a>
     <?php endforeach; ?>
-    </tbody>
-</table>
+</div>
 <?php endif; ?>
+
+<script>
+// UI only: apply the filters as soon as a value is chosen (the form still works without JavaScript).
+document.querySelectorAll('.filter-form select, .filter-form input[type=number]').forEach(function (el) {
+    el.addEventListener('change', function () { el.form.submit(); });
+});
+</script>
 <?php require __DIR__ . '/../includes/footer.php'; ?>

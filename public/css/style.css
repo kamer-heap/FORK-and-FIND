@@ -138,3 +138,48 @@ main.home { background:radial-gradient(circle at 100% 42%,#e6eed5 0,transparent 
 body { min-height:100vh; display:flex; flex-direction:column; }
 body > main { flex:1 0 auto; width:100%; }
 body > .site-footer { flex-shrink:0; margin-top:3.5rem; }
+
+/* ---- wide pages (Find meals, and the pages that follow) ---- */
+main.wide { max-width:none; margin:0; padding:2.2rem clamp(1rem,5vw,4.5rem) 1rem; }
+.page-title { font-size:clamp(2.2rem,5vw,3.6rem); line-height:1.05; font-weight:800; color:var(--accent); margin:0 0 .6rem; letter-spacing:-.02em; }
+.page-sub { margin:0 0 2rem; color:var(--accent-deep); }
+.filter-form { display:grid; grid-template-columns:minmax(0,2.1fr) minmax(0,1fr) minmax(0,1fr); gap:1.4rem; align-items:end; }
+.filter-form label.field { font-size:.8rem; font-weight:600; color:var(--accent); }
+.filter-form .field input, .filter-form .field select { display:block; width:100%; margin-top:.4rem; padding:.8rem 1.1rem; font:inherit; font-weight:400; font-size:.85rem; color:var(--ink); background:#fff; border:1px solid var(--line); border-radius:999px; box-shadow:0 2px 8px rgba(35,75,54,.06); }
+.filter-form .field-search input { margin:0; padding:1.1rem 1.3rem; font-size:.95rem; border-radius:16px; }
+.filter-form select { appearance:none; -webkit-appearance:none; background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%23234b36' stroke-width='2'%3E%3Cpath d='m1 1 5 5 5-5'/%3E%3C/svg%3E") no-repeat right 1.1rem center; padding-right:2.4rem; }
+.filter-form input:focus, .filter-form select:focus { outline:2px solid var(--sage); border-color:var(--accent); }
+.visually-hidden { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+.result-count { margin:1.8rem 0 .9rem; font-size:.85rem; font-weight:500; color:var(--accent); }
+.tiles.three { grid-template-columns:repeat(3,minmax(0,1fr)); margin-top:0; }
+.empty-state { background:#fff; border-radius:14px; padding:2rem; text-align:center; color:var(--accent); box-shadow:0 4px 18px rgba(35,75,54,.08); }
+.badge-off { background:#f1d9d2; color:#8a3a22; }
+@media (max-width:980px) { .tiles.three { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:680px) { .filter-form { grid-template-columns:1fr; gap:1rem; } .tiles.three { grid-template-columns:1fr; } }
+
+/* ---- cafeteria details page ---- */
+.crumbs { font-size:.75rem; color:#6b736d; margin-bottom:1rem; }
+.crumbs a { color:#6b736d; text-decoration:none; }
+.cafe-banner { display:block; width:100%; height:clamp(11rem,26vw,18rem); object-fit:cover; border-radius:16px; }
+.cafe-head { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-start; gap:1rem 3rem; margin:1.4rem 0 2rem; }
+.cafe-head .page-title { margin-bottom:.5rem; }
+.cafe-place { margin:0; font-weight:600; color:var(--accent); }
+.hours { display:flex; flex-direction:column; font-size:.9rem; padding-top:.8rem; min-width:11rem; }
+.hours-label { font-size:.65rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--accent); margin-bottom:.3rem; }
+.section-title { font-size:clamp(1.5rem,3vw,2.1rem); font-weight:800; color:var(--accent); margin:0 0 1rem; letter-spacing:-.01em; }
+.section-row { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:1rem; margin-top:2.4rem; }
+.section-row .section-title { margin:0; }
+.page-sub.small { font-size:.8rem; margin:.5rem 0 1.2rem; color:#6b736d; }
+.tiles.two { grid-template-columns:repeat(2,minmax(0,1fr)); margin-top:0; }
+.review-panel { background:#fff; border-radius:14px; padding:1rem 1.4rem; margin-bottom:1.2rem; box-shadow:0 4px 18px rgba(35,75,54,.08); }
+.review-panel[hidden] { display:none; }
+.review-item { padding:.6rem 0; border-bottom:1px solid var(--line); }
+.review-item:last-child { border-bottom:0; }
+.review-item h3 { margin:0 0 .3rem; font-size:1rem; color:var(--accent-deep); }
+.review-card { background:#fff; border-radius:14px; padding:1.2rem 1.5rem; margin-bottom:1.1rem; box-shadow:0 4px 18px rgba(35,75,54,.08); display:flex; flex-direction:column; gap:.45rem; }
+.review-item-name { font-size:.75rem; color:#6b736d; }
+.stars { color:var(--accent); letter-spacing:.1em; font-size:.9rem; }
+.stars b { letter-spacing:0; margin-left:.4rem; font-weight:500; }
+.review-text { margin:.2rem 0; }
+.review-date { font-size:.7rem; color:#8a8f88; }
+@media (max-width:680px) { .tiles.two { grid-template-columns:1fr; } }
