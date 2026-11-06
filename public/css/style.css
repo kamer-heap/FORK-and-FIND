@@ -229,3 +229,42 @@ main.account > .flash { max-width:1248px; margin:0 auto 24px; }
     .account-signup .welcome-sub { color:#202b24; }
     .account-login .form-card { border-color:transparent; }
 }
+/* ---- Add review page ---- */
+.rf-wrap { display:flex; flex-direction:column; gap:48px; max-width:1248px; margin:0 auto; }
+.rf-intro { display:flex; flex-direction:column; gap:12px; }
+.rf-intro h1 { margin:0; font-size:56px; font-weight:700; line-height:1.05; letter-spacing:-.02em; color:#174c36; }
+.rf-intro p { margin:0; font-size:16px; line-height:1.45; color:#202b24; }
+.rf-card { display:flex; flex-direction:column; gap:24px; width:100%; max-width:800px; background:#fff; padding:28px 24px; border-radius:13px; box-shadow:0 3px 10px rgba(61,64,31,.09); }
+.rf-meal { display:flex; gap:20px; align-items:flex-start; }
+.rf-photo { width:170px; height:125px; flex-shrink:0; object-fit:cover; border-radius:8px; }
+.rf-meal-info { display:flex; flex-direction:column; gap:8px; min-width:0; }
+.rf-meal-info h2 { margin:0; font-size:24px; font-weight:600; line-height:1.45; color:#174c36; }
+.rf-cafe { margin:0; font-size:14px; line-height:1.45; color:#777970; }
+.rf-price { margin:0; font-size:16px; font-weight:600; line-height:1.45; color:#174c36; }
+.rf-rating { margin:0; padding:0; border:0; min-width:0; }
+.rf-rating legend { padding:0; margin-bottom:24px; }
+.star-picker { position:relative; display:flex; flex-direction:row-reverse; justify-content:flex-end; gap:22px; width:max-content; }
+.star-picker input { position:absolute; opacity:0; width:1px; height:1px; }
+.star-picker label { cursor:pointer; font-size:32px; line-height:1.45; color:#174c36; }
+.star-picker label::before { content:"\2606"; }
+.star-picker input:checked ~ label::before, .star-picker label:hover::before, .star-picker label:hover ~ label::before { content:"\2605"; }
+.star-picker input:focus-visible + label { outline:2px solid var(--sage); outline-offset:4px; border-radius:4px; }
+.rf-field { display:flex; flex-direction:column; gap:24px; }
+.rf-textarea { display:block; width:100%; min-height:118px; padding:16px; border:1px solid #e7e3db; border-radius:6px; background:#fff; font-family:Inter, system-ui, Arial, sans-serif; font-size:14px; line-height:1.45; color:#282b27; resize:vertical; }
+.rf-textarea::placeholder { color:#777970; opacity:1; }
+.rf-textarea:focus { outline:2px solid var(--sage); border-color:var(--accent); }
+.rf-submit { align-self:flex-start; width:156px; padding:14px 22px; border-radius:18px; font-size:14px; font-weight:600; line-height:1.45; text-align:center; }
+.rf-delete { margin:0; }
+.rf-delete button, .rf-delete button:hover { padding:0; background:none; border-radius:0; color:#a12222; font-size:14px; font-weight:600; }
+.rf-delete button:hover { text-decoration:underline; }
+.tile-actions { display:flex; flex-wrap:wrap; gap:.3rem 1.3rem; margin-top:.5rem; }
+.tile-actions .tile-link { margin-top:0; text-decoration:none; }
+.tile-actions .tile-link:hover { text-decoration:underline; }
+@media (max-width:600px) {
+    .rf-wrap { gap:32px; }
+    .rf-intro h1 { font-size:32px; }
+    .rf-meal { flex-direction:column; }
+    .rf-photo { width:100%; height:180px; }
+    .rf-submit { width:100%; }
+}
+@media (min-width:601px) and (max-width:900px) { .rf-intro h1 { font-size:38px; } }
