@@ -61,8 +61,7 @@ $clock = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="cu
         </ul>
     </div>
     <div class="hero-visual">
-        <img class="hero-img" src="/img/hero.png" alt="Chicken biryani with raita">
-        <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="/img/hero.png" aria-hidden="true" tabindex="-1" disablepictureinpicture>
+        <video class="hero-video" autoplay muted loop playsinline preload="auto" aria-hidden="true" tabindex="-1" disablepictureinpicture>
             <source src="/img/hero-video.mp4" type="video/mp4">
             <source src="/img/hero-video.webm" type="video/webm">
         </video>
@@ -70,13 +69,20 @@ $clock = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="cu
 </section>
 <script>
 // UI only. Plays the hero video and dissolves it at the end of each loop so the jump back to the
-// start (full plate -> empty plate) is a soft fade, not a cut. If the video can't play, the image stays.
+// start (full plate -> empty plate) is a soft fade, not a cut.
 (function () {
     var v = document.querySelector('.hero-video');
     if (!v) return;
     var box = v.parentNode;
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduce) { v.removeAttribute('autoplay'); v.preload = 'none'; v.pause(); return; }
+    if (reduce) {
+        // Reduced motion: no playback, just a still frame of the fully plated dish.
+        v.removeAttribute('autoplay');
+        v.pause();
+        v.addEventListener('loadedmetadata', function () { try { v.currentTime = Math.max(0, Math.min(21, v.duration - 1)); } catch (e) {} });
+        v.addEventListener('seeked', function () { box.classList.add('is-playing'); });
+        return;
+    }
     var FADE_OUT = 0.7;   // seconds before the end when the fade-out starts
     var FADE_IN_AT = 0.3; // skip the black first frame, then fade in
     function tick() {
