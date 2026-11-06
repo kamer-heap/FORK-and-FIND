@@ -60,8 +60,39 @@ $clock = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="cu
             <li><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3 6.5 7 .8-5.2 4.8 1.4 7L12 17.6 5.8 21l1.4-7L2 9.3l7-.8z"/></svg><div><strong>Read Reviews</strong><span>See what others say</span></div></li>
         </ul>
     </div>
-    <img class="hero-img" src="/img/hero.png" alt="Chicken biryani with raita">
+    <div class="hero-visual">
+        <img class="hero-img" src="/img/hero.png" alt="Chicken biryani with raita">
+        <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="/img/hero.png" aria-hidden="true" tabindex="-1" disablepictureinpicture>
+            <source src="/img/hero-video.mp4" type="video/mp4">
+            <source src="/img/hero-video.webm" type="video/webm">
+        </video>
+    </div>
 </section>
+<script>
+// UI only. Plays the hero video and dissolves it at the end of each loop so the jump back to the
+// start (full plate -> empty plate) is a soft fade, not a cut. If the video can't play, the image stays.
+(function () {
+    var v = document.querySelector('.hero-video');
+    if (!v) return;
+    var box = v.parentNode;
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) { v.removeAttribute('autoplay'); v.preload = 'none'; v.pause(); return; }
+    var FADE_OUT = 0.7;   // seconds before the end when the fade-out starts
+    var FADE_IN_AT = 0.3; // skip the black first frame, then fade in
+    function tick() {
+        if (!v.paused && v.duration) {
+            var t = v.currentTime;
+            v.classList.toggle('is-hidden', t < FADE_IN_AT || t > v.duration - FADE_OUT);
+            if (t >= FADE_IN_AT && !box.classList.contains('is-playing')) box.classList.add('is-playing');
+        }
+        requestAnimationFrame(tick);
+    }
+    v.addEventListener('pause', function () { box.classList.remove('is-playing'); });
+    var p = v.play();
+    if (p && p.catch) p.catch(function () {});
+    requestAnimationFrame(tick);
+})();
+</script>
 
 <section class="block">
     <div class="title-row"><h2 class="block-title">Explore Campus Cafeterias</h2><svg class="deco-hat" width="54" height="50" viewBox="0 0 54 50" fill="none" stroke="#9db98f" stroke-width="2" aria-hidden="true"><path d="M14 30c-7-1-10-9-5-14 3-3 7-3 9-2 1-6 8-9 14-6 3 1 5 4 5 6 5-2 11 2 10 8-1 4-4 6-8 6v13H14z"/><path d="M14 38h28"/></svg></div>
