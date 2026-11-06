@@ -1,0 +1,66 @@
+/* ---- Owner (and later Admin) workspace pages. Loaded after style.css via $extraCss ---- */
+.rf-intro .ow-eyebrow { font-size:12px; font-weight:600; color:#174c36; }
+.rf-intro .ow-sub { color:#174c36; }
+.rf-intro > .mr-btn { align-self:flex-start; }
+.mr-btn.is-primary, .mr-btn.is-primary:hover { height:48px; background:#174c36; border-color:#174c36; color:#fff; }
+.mr-btn.is-primary:hover { background:#183728; }
+
+/* dashboard */
+.ow-card { border:1px solid #e7e3db; }
+.ow-overview { display:flex; align-items:flex-start; gap:32px; padding:24px; background:#fff; border:1px solid #e7e3db; border-radius:13px; box-shadow:0 3px 10px rgba(61,64,31,.09); }
+.ow-identity { display:flex; flex-direction:column; gap:8px; flex:0 1 700px; min-width:0; }
+.ow-cafe-name { margin:0; font-size:28px; font-weight:600; line-height:1.45; color:#174c36; }
+.ow-cafe-place { margin:0; font-size:16px; line-height:1.45; color:#777970; }
+.ow-cafe-time { margin:0; font-size:14px; line-height:1.45; color:#777970; }
+.ow-stats { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px; }
+.ow-stat { display:flex; flex-direction:column; gap:8px; padding:24px; background:#fff; border:1px solid #e7e3db; border-radius:13px; box-shadow:0 3px 10px rgba(61,64,31,.09); }
+.ow-stat-label { margin:0; font-size:14px; font-weight:500; line-height:1.45; color:#777970; }
+.ow-stat-num { margin:0; font-size:32px; font-weight:600; line-height:1.45; color:#174c36; }
+.ow-actions { display:flex; gap:20px; }
+.ow-section { display:flex; flex-direction:column; gap:20px; }
+.ow-section h2 { margin:0; font-size:28px; font-weight:600; line-height:1.45; color:#174c36; }
+.ow-feed { display:flex; flex-direction:column; gap:20px; }
+.ow-label { margin:0; font-size:14px; font-weight:500; line-height:1.45; color:#174c36; }
+
+/* manage menu table */
+.om-table { background:#fff; border:1px solid #e7e3db; border-radius:13px; box-shadow:0 3px 10px rgba(61,64,31,.09); overflow:hidden; }
+.om-head, .om-row { display:grid; grid-template-columns:329fr 125fr 102fr 182fr 398fr; gap:16px; padding:24px; align-items:start; }
+.om-head { padding:16px 24px; background:#f0eee8; font-size:12px; font-weight:600; line-height:1.45; color:#777970; }
+.om-row + .om-row { border-top:1px solid #e7e3db; }
+.om-meal { display:flex; align-items:center; gap:16px; min-width:0; }
+.om-photo { width:64px; height:64px; flex-shrink:0; object-fit:cover; border-radius:6px; }
+.om-name { display:block; font-size:14px; font-weight:600; line-height:1.45; color:#202b24; overflow-wrap:anywhere; }
+.om-sub { display:none; font-size:14px; font-weight:500; line-height:1.45; color:#174c36; }
+.om-price { font-size:14px; font-weight:600; line-height:1.45; color:#174c36; }
+.om-rating { font-size:14px; line-height:1.45; color:#202b24; }
+.om-badge { display:inline-block; padding:6px 10px; border-radius:4px; font-size:12px; font-weight:500; line-height:1.45; }
+.om-badge.is-on { background:#edf3ed; color:#174c36; }
+.om-badge.is-off { background:#f5e8e1; color:#92452d; }
+.om-actions { display:flex; flex-direction:column; align-items:flex-start; gap:12px; }
+.om-actions form { margin:0; }
+.om-links { display:flex; align-items:center; gap:12px; font-size:14px; font-weight:500; line-height:1.45; color:#174c36; }
+.om-links form { display:inline; }
+.ow-link, .ow-link:hover { padding:0; background:none; border:0; border-radius:0; color:#174c36; font-family:Inter, system-ui, Arial, sans-serif; font-size:14px; font-weight:500; line-height:1.45; text-decoration:none; cursor:pointer; }
+.ow-link:hover { text-decoration:underline; }
+.om-empty { margin:0; padding:24px; font-size:14px; color:#777970; }
+
+@media (max-width:900px) {
+    .om-head { display:none; }
+    .om-row { display:flex; flex-direction:column; align-items:flex-start; gap:14px; }
+    .om-price, .om-rating { display:none; }
+    .om-sub { display:block; }
+    .om-photo { width:80px; height:80px; }
+    .om-name { font-size:18px; }
+    .om-name-wrap { display:flex; flex-direction:column; gap:6px; min-width:0; }
+    .ow-overview { flex-direction:column; gap:32px; }
+    .ow-identity { flex:none; width:100%; }
+}
+@media (min-width:601px) and (max-width:900px) {
+    .ow-wrap .rf-intro .ow-sub, .ow-wrap .ow-label { color:#777970; }
+}
+@media (max-width:600px) {
+    .ow-stats { grid-template-columns:1fr; }
+    .ow-actions { flex-direction:column; }
+    .ow-wrap .ow-label { color:#777970; }
+    .om-row { padding:24px 20px; }
+}

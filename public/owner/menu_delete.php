@@ -14,4 +14,4 @@ $stmt = $pdo->prepare('DELETE FROM Menu_Items WHERE item_id = :id AND cafe_id = 
 $stmt->execute([':id' => $itemId, ':cafe' => $cafe['cafe_id']]);
 
 setFlash($stmt->rowCount() ? 'success' : 'error', $stmt->rowCount() ? 'Item deleted.' : 'Item not found.');
-redirect('/owner/dashboard.php');
+redirect('/owner/menu.php');
