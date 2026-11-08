@@ -15,13 +15,16 @@ $form = ['name' => '', 'price' => '', 'category' => '', 'description' => ''];
 
 if (isset($_REQUEST['id'])) {
     $itemId = intOrNull($_REQUEST['id']);
-    // Load only if the item belongs to THIS owner's cafeteria.
-    $stmt = $pdo->prepare('SELECT item_id, name, price, category, description, image FROM Menu_Items WHERE item_id = :id AND cafe_id = :cafe');
-    $stmt->execute([':id' => $itemId, ':cafe' => $cafe['cafe_id']]);
+    $stmt = $pdo->prepare('SELECT item_id, cafe_id, name, price, category, description, image FROM Menu_Items WHERE item_id = :id');
+    $stmt->execute([':id' => $itemId]);
     $existing = $stmt->fetch();
     if ($itemId === null || !$existing) {
         http_response_code(404);
         exit('Menu item not found.');
+    }
+    if ((int) $existing['cafe_id'] !== (int) $cafe['cafe_id']) {
+        http_response_code(403);
+        exit('403 Forbidden: access denied.');
     }
     $form = [
         'name'        => $existing['name'],

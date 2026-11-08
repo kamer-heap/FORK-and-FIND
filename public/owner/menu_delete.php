@@ -10,6 +10,18 @@ if ($itemId === null || !$cafe) {
     exit('Bad request.');
 }
 
+$itemStmt = $pdo->prepare('SELECT cafe_id FROM Menu_Items WHERE item_id = :id');
+$itemStmt->execute([':id' => $itemId]);
+$item = $itemStmt->fetch();
+if (!$item) {
+    setFlash('error', 'Item not found.');
+    redirect('/owner/menu.php');
+}
+if ((int) $item['cafe_id'] !== (int) $cafe['cafe_id']) {
+    http_response_code(403);
+    exit('403 Forbidden: access denied.');
+}
+
 $stmt = $pdo->prepare('DELETE FROM Menu_Items WHERE item_id = :id AND cafe_id = :cafe');
 $stmt->execute([':id' => $itemId, ':cafe' => $cafe['cafe_id']]);
 
