@@ -21,6 +21,9 @@ erDiagram
         varchar department
         varchar location
         varchar timings
+        varchar days "opening days, for example Monday-Friday"
+        varchar description "optional"
+        varchar image "optional, file name in public/uploads"
         int owner_id FK "unique: one owner, one cafeteria"
     }
     Menu_Items {
@@ -29,6 +32,8 @@ erDiagram
         varchar name
         decimal price
         varchar category
+        varchar description "optional"
+        varchar image "optional, file name in public/uploads"
         tinyint available "0 = sold out"
     }
     Reviews {
@@ -41,4 +46,8 @@ erDiagram
     }
 ```
 
-Rules: one review per student per menu item (a second submit updates it). A cafeteria has at most one owner.
+Rules:
+- A cafeteria has at most one owner (`owner_id` is unique and may be empty).
+- A cafeteria cannot have two menu items with the same name.
+- One review per student per menu item: a second submit updates it (`UNIQUE(item_id, user_id)`).
+- When a cafeteria is deleted, its menu items and their reviews are deleted too.
