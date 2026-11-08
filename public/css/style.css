@@ -1,5 +1,6 @@
 :root { --bg:#fcf9f0; --ink:#1f2a24; --accent:#234b36; --accent-deep:#183728; --terracotta:#c96f4a; --card:#fff; --line:#e6e1d3; --sage:#dbe8c9; }
 * { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 body { margin:0; font-family: Inter, system-ui, Arial, sans-serif; background:var(--bg); color:var(--ink); line-height:1.5; }
 a { color: var(--accent); }
 
@@ -59,8 +60,9 @@ main.home .flash { margin:1rem clamp(1rem,5vw,4rem) 0; }
 .tile { display:block; background:#fff; border-radius:14px; overflow:hidden; text-decoration:none; color:inherit; box-shadow:0 4px 18px rgba(35,75,54,.08); transition:box-shadow .15s; }
 .tile:hover { box-shadow:0 8px 26px rgba(35,75,54,.18); }
 .tile-main { display:block; color:inherit; text-decoration:none; }
-.tile-photo { position:relative; aspect-ratio:404/218; background:#e9e4d6; }
+.tile-photo { position:relative; aspect-ratio:4/3; background:#e9e4d6; }
 .tile-photo img { width:100%; height:100%; object-fit:cover; display:block; }
+.tile-photo img[src$=".svg"] { object-fit:contain; padding:15%; background:#fdf9f0; }
 .badge { position:absolute; top:.7rem; left:.7rem; background:var(--sage); color:var(--accent); font-size:.8rem; font-weight:700; padding:.3rem .8rem; border-radius:999px; }
 .tile-body { padding:1rem 1.1rem 1.1rem; }
 .tile-body h3 { margin:0 0 .5rem; font-size:1.1rem; color:var(--accent-deep); }
@@ -161,7 +163,9 @@ main.wide { max-width:none; margin:0; padding:2.2rem clamp(1rem,5vw,4.5rem) 1rem
 /* ---- cafeteria details page ---- */
 .crumbs { font-size:.75rem; color:#6b736d; margin-bottom:1rem; }
 .crumbs a { color:#6b736d; text-decoration:none; }
-.cafe-banner { display:block; width:100%; height:clamp(11rem,26vw,18rem); object-fit:cover; border-radius:16px; }
+.cafe-banner { display:block; width:100%; aspect-ratio:16/6; height:auto; object-fit:cover; object-position:center 40%; border-radius:16px; }
+.block#cafeterias { scroll-margin-top:80px; }
+.item-details > .cafe-banner { max-width:720px; aspect-ratio:4/3; object-position:center; }
 .cafe-head { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-start; gap:1rem 3rem; margin:1.4rem 0 2rem; }
 .cafe-head .page-title { margin-bottom:.5rem; }
 .cafe-place { margin:0; font-weight:600; color:var(--accent); }
