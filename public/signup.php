@@ -16,8 +16,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $confirm  = $_POST['confirm_password'] ?? '';
     $role     = $_POST['role'] ?? 'student';
 
-    if ($name === '' || textLength($name) > 100) {
-        $errors[] = 'Name is required (max 100 characters).';
+    if (
+        $name === ''
+        || textLength($name) > 100
+        || preg_match("/^[\p{L}]+(?:[ .'-][\p{L}]+)*$/u", $name) !== 1
+    ) {
+        $errors[] = 'Enter a valid name using letters, spaces, apostrophes, hyphens or periods (max 100 characters).';
     }
     if (!filter_var($email, FILTER_VALIDATE_EMAIL) || textLength($email) > 150) {
         $errors[] = 'Enter a valid email address.';
