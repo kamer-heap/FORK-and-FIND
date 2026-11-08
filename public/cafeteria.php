@@ -83,16 +83,18 @@ $isStudent = currentRole() === 'student';
 <div class="tiles two">
 <?php foreach ($items as $item): ?>
     <article class="tile">
-        <div class="tile-photo"><img src="<?= e(mealImage($item)) ?>" alt="<?= e($item['name']) ?>" loading="lazy"></div>
-        <div class="tile-body">
-            <h3><?= e($item['name']) ?></h3>
-            <p class="muted"><?= e($item['category']) ?></p>
-            <p class="price-row"><strong>PKR <?= e(number_format((float) $item['price'], 0)) ?></strong>
-                <span><?= $item['avg_rating'] !== null ? '&#9733; ' . e((string) $item['avg_rating']) . ' (' . (int) $item['review_count'] . ')' : 'No reviews yet' ?></span></p>
-            <div class="tile-actions">
-                <a class="tile-link" href="#reviews"><?= (int) $item['available'] ? '' : 'Sold out today &middot; ' ?>View Reviews &rarr;</a>
-                <?php if ($isStudent): ?><a class="tile-link" href="/review_form.php?item=<?= (int) $item['item_id'] ?>">Write a review &rarr;</a><?php endif; ?>
+        <a class="tile-main" href="/item.php?id=<?= (int) $item['item_id'] ?>">
+            <div class="tile-photo"><img src="<?= e(mealImage($item)) ?>" alt="<?= e($item['name']) ?>" loading="lazy"></div>
+            <div class="tile-body">
+                <h3><?= e($item['name']) ?></h3>
+                <p class="muted"><?= e($item['category']) ?></p>
+                <p class="price-row"><strong>PKR <?= e(number_format((float) $item['price'], 0)) ?></strong>
+                    <span><?= $item['avg_rating'] !== null ? '&#9733; ' . e((string) $item['avg_rating']) . ' (' . (int) $item['review_count'] . ')' : 'No reviews yet' ?></span></p>
+                <?php if (!(int) $item['available']): ?><p class="muted">Sold out today</p><?php endif; ?>
             </div>
+        </a>
+        <div class="tile-body tile-actions">
+            <?php if ($isStudent): ?><a class="tile-link" href="/review_form.php?item=<?= (int) $item['item_id'] ?>">Write a review &rarr;</a><?php endif; ?>
         </div>
     </article>
 <?php endforeach; ?>
