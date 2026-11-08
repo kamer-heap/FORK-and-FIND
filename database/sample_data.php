@@ -28,15 +28,15 @@ INSERT INTO Cafeterias (name, department, location, timings, days, description, 
 
 INSERT INTO Menu_Items (cafe_id, name, price, category, description, image, available) VALUES
  (1, 'Chicken Biryani', 250, 'Rice', NULL, '4a18594531bcc9a43a95838b.jpg', 1),
- (1, 'Beef Pulao',      300, 'Rice', NULL, '5c02978f015a304859fe327c.jpg', 1),
- (1, 'Raita',            40, 'Sides', NULL, '8b03da0b5852dc516fc7995e.webp', 1),
- (2, 'Chicken Chowmein',280, 'Chinese', NULL, '47e27ba45b6365a36ae7fd43.jpg', 1),
- (2, 'Chicken Biryani', 320, 'Rice', NULL, '90fe5b7a11e52c723ab3370d.jpg', 1),
- (2, 'Fried Rice',      240, 'Chinese', NULL, 'a84baa191e68d255ad52757e.webp', 0),
- (3, 'Doodh Patti Chai', 60, 'Drinks', NULL, 'ab9bc7fe061e87e48aae73f8.jpg', 1),
- (3, 'Paratha Roll',    180, 'Snacks', NULL, 'b31f1bf222fadf265837a17f.jpg', 1),
- (3, 'Samosa',           30, 'Snacks', NULL, 'b216e00b86bf24c1e44a11e1.jpg', 1),
- (4, 'Fruit Chaat',     150, 'Healthy', NULL, 'c3ef12459b334a8e368fb065.jpg', 1);
+ (1, 'Beef Pulao',      300, 'Rice', NULL, 'a84baa191e68d255ad52757e.webp', 1),
+ (1, 'Raita',            40, 'Sides', NULL, 'b216e00b86bf24c1e44a11e1.jpg', 1),
+ (2, 'Chicken Chowmein',280, 'Chinese', NULL, '90fe5b7a11e52c723ab3370d.jpg', 1),
+ (2, 'Chicken Biryani', 320, 'Rice', NULL, 'b31f1bf222fadf265837a17f.jpg', 1),
+ (2, 'Fried Rice',      240, 'Chinese', NULL, '47e27ba45b6365a36ae7fd43.jpg', 0),
+ (3, 'Doodh Patti Chai', 60, 'Drinks', NULL, '8b03da0b5852dc516fc7995e.webp', 1),
+ (3, 'Paratha Roll',    180, 'Snacks', NULL, '5c02978f015a304859fe327c.jpg', 1),
+ (3, 'Samosa',           30, 'Snacks', NULL, 'c3ef12459b334a8e368fb065.jpg', 1),
+ (4, 'Fruit Chaat',     150, 'Healthy', NULL, NULL, 1);
 
 INSERT INTO Reviews (item_id, user_id, rating, comment) VALUES
  (1, 6, 5, 'Best biryani on campus, great portion.'),

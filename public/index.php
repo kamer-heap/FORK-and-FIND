@@ -129,7 +129,7 @@ $clock = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="cu
     <p class="block-sub">Everyday favourites that fit your budget.</p>
     <div class="tiles">
     <?php foreach ($topMeals as $m): ?>
-        <a class="tile" href="/cafeteria.php?id=<?= (int) $m['cafe_id'] ?>">
+        <a class="tile" href="/item.php?id=<?= (int) $m['item_id'] ?>">
             <div class="tile-photo"><img src="<?= e(mealImage($m)) ?>" alt="<?= e($m['name']) ?>" loading="lazy"></div>
             <div class="tile-body">
                 <h3><?= e($m['name']) ?></h3>
