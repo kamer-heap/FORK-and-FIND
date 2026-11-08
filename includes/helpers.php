@@ -83,12 +83,11 @@ function cafeImage(array $cafe): string
 }
 
 // Meal picture. Uses an uploaded file if the row has an 'image' value,
-// otherwise one of the default meal pictures (chosen by item_id).
+// otherwise a neutral placeholder for legacy records that still need an image.
 function mealImage(array $item): string
 {
     if (!empty($item['image'])) {
         return '/uploads/' . rawurlencode((string) $item['image']);
     }
-    $defaults = ['meal-biryani.png', 'meal-wrap.png', 'meal-daal.png'];
-    return '/img/' . $defaults[((int) ($item['item_id'] ?? 1) - 1) % 3];
+    return '/img/placeholder-meal.svg';
 }
