@@ -94,7 +94,7 @@ $isStudent = currentRole() === 'student';
             </div>
         </a>
         <div class="tile-body tile-actions">
-            <?php if ($isStudent): ?><a class="tile-link" href="/review_form.php?item=<?= (int) $item['item_id'] ?>">Write a review &rarr;</a><?php endif; ?>
+            <?php if ($isStudent): ?><a class="tile-link" href="/student/review_form.php?item=<?= (int) $item['item_id'] ?>">Write a review &rarr;</a><?php endif; ?>
         </div>
     </article>
 <?php endforeach; ?>

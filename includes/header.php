@@ -29,7 +29,7 @@ $flash = getFlash();
             <?php if (currentRole() === 'owner'): ?><a href="/owner/dashboard.php">My cafeteria</a><?php endif; ?>
             <?php if (currentRole() === 'admin'): ?><a href="/admin/dashboard.php">Admin</a><?php endif; ?>
             <?php if (currentRole() === 'student'): ?>
-                <a class="who" href="/my_reviews.php" title="My reviews"><?= e($_SESSION['name']) ?> (<?= e(currentRole()) ?>)</a>
+                <a class="who" href="/student/my_reviews.php" title="My reviews"><?= e($_SESSION['name']) ?> (<?= e(currentRole()) ?>)</a>
             <?php else: ?>
                 <span class="who"><?= e($_SESSION['name']) ?> (<?= e(currentRole()) ?>)</span>
             <?php endif; ?>

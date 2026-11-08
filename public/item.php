@@ -106,7 +106,7 @@ $isStudent = currentRole() === 'student';
     <?php if ($isStudent): ?>
         <a
             class="tile-link"
-            href="/review_form.php?item=<?= (int) $item['item_id'] ?>"
+            href="/student/review_form.php?item=<?= (int) $item['item_id'] ?>"
         >
             Write a review &rarr;
         </a>
