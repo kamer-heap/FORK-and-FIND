@@ -83,8 +83,10 @@ fork-and-find/
 │   │   ├── menu_delete.php
 │   │   ├── menu_toggle.php
 │   │   └── reviews.php
-│   └── css/
-│       └── style.css
+│   ├── css/
+│   │   └── style.css
+│   ├── img/                    # default UI images and video
+│   └── uploads/                # committed demo cafeteria/meal images
 ├── .gitignore
 ├── README.md
 └── SETUP.md
@@ -151,6 +153,11 @@ sudo mysql < database/schema.sql
 sudo mysql < database/sample_data.sql
 cp config/database.example.php config/database.php   # then set your DB password
 ```
+
+The demo image files are stored in `public/uploads/` and their filenames are
+included in `database/sample_data.sql`, so a fresh installation displays the
+same images instead of meal placeholders. Keep both the folder and seed data
+together.
 
 Then set up the virtual host from [SETUP.md](SETUP.md) and open **http://forkfind.local**.
 

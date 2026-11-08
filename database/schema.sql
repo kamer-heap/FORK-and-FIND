@@ -22,6 +22,9 @@ CREATE TABLE Cafeterias (
     department VARCHAR(100) NOT NULL,
     location   VARCHAR(150) NOT NULL,
     timings    VARCHAR(100) NOT NULL,
+    days       VARCHAR(30) NULL,
+    description VARCHAR(500) NULL,
+    image      VARCHAR(100) NULL,
     owner_id   INT UNSIGNED NULL UNIQUE,                     -- one owner -> one cafeteria
     CONSTRAINT fk_cafe_owner FOREIGN KEY (owner_id) REFERENCES Users(user_id) ON DELETE SET NULL
 ) ENGINE=InnoDB;
@@ -32,6 +35,8 @@ CREATE TABLE Menu_Items (
     name      VARCHAR(100) NOT NULL,
     price     DECIMAL(8,2) NOT NULL,
     category  VARCHAR(50) NOT NULL,
+    description VARCHAR(500) NULL,
+    image     VARCHAR(100) NULL,
     available TINYINT(1) NOT NULL DEFAULT 1,                 -- 0 = sold out
     UNIQUE KEY uq_cafe_item (cafe_id, name),
     CONSTRAINT fk_item_cafe FOREIGN KEY (cafe_id) REFERENCES Cafeterias(cafe_id) ON DELETE CASCADE

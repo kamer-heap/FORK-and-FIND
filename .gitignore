@@ -2,9 +2,10 @@
 config/database.php
 .env
 
-# Uploaded photos (added by owners and admins on the live site)
+# Uploaded photos are part of the demo installation and must be retained.
 public/uploads/*
-!public/uploads/.gitkeep
+!public/uploads/
+!public/uploads/*
 
 # Editor / OS
 .vscode/
