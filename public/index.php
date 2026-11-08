@@ -100,7 +100,7 @@ $clock = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="cu
 })();
 </script>
 
-<section class="block">
+<section class="block" id="cafeterias">
     <div class="title-row"><h2 class="block-title">Explore Campus Cafeterias</h2><svg class="deco-hat" width="54" height="50" viewBox="0 0 54 50" fill="none" stroke="#9db98f" stroke-width="2" aria-hidden="true"><path d="M14 30c-7-1-10-9-5-14 3-3 7-3 9-2 1-6 8-9 14-6 3 1 5 4 5 6 5-2 11 2 10 8-1 4-4 6-8 6v13H14z"/><path d="M14 38h28"/></svg></div>
     <?php if (!$cafes): ?><p>No cafeterias yet.</p><?php endif; ?>
     <div class="tiles">

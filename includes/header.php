@@ -22,7 +22,7 @@ $flash = getFlash();
         <span class="brand-name">FORK &amp; FIND</span>
     </a>
     <nav>
-        <a href="/index.php">Cafeterias</a>
+        <a href="/index.php#cafeterias">Cafeterias</a>
         <a href="/search.php">Find meals</a>
         <a href="/search.php?max_price=200">Under PKR 200</a>
         <?php if (isLoggedIn()): ?>

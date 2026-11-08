@@ -1,5 +1,6 @@
 :root { --bg:#fcf9f0; --ink:#1f2a24; --accent:#234b36; --accent-deep:#183728; --terracotta:#c96f4a; --card:#fff; --line:#e6e1d3; --sage:#dbe8c9; }
 * { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 body { margin:0; font-family: Inter, system-ui, Arial, sans-serif; background:var(--bg); color:var(--ink); line-height:1.5; }
 a { color: var(--accent); }
 
@@ -163,6 +164,7 @@ main.wide { max-width:none; margin:0; padding:2.2rem clamp(1rem,5vw,4.5rem) 1rem
 .crumbs { font-size:.75rem; color:#6b736d; margin-bottom:1rem; }
 .crumbs a { color:#6b736d; text-decoration:none; }
 .cafe-banner { display:block; width:100%; aspect-ratio:16/6; height:auto; object-fit:cover; object-position:center 40%; border-radius:16px; }
+.block#cafeterias { scroll-margin-top:80px; }
 .item-details > .cafe-banner { max-width:720px; aspect-ratio:4/3; object-position:center; }
 .cafe-head { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-start; gap:1rem 3rem; margin:1.4rem 0 2rem; }
 .cafe-head .page-title { margin-bottom:.5rem; }
