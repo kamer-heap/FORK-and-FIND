@@ -41,8 +41,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($form['name'] === '' || textLength($form['name']) > 100) {
         $errors[] = 'Item name is required (max 100 characters).';
     }
-    if (!is_numeric($form['price']) || $form['price'] < 0 || $form['price'] > 100000) {
-        $errors[] = 'Price must be a number between 0 and 100000.';
+    if (!is_numeric($form['price']) || $form['price'] <= 0 || $form['price'] > 100000) {
+        $errors[] = 'Price must be greater than 0 and at most 100000.';
     }
     if ($form['category'] === '' || textLength($form['category']) > 50) {
         $errors[] = 'Category is required (max 50 characters).';
@@ -133,7 +133,7 @@ require __DIR__ . '/../../includes/header.php';
         </div>
         <div class="of-field">
             <label class="of-label" for="price">Price (PKR)</label>
-            <input class="of-input" type="number" id="price" name="price" value="<?= e((string) $form['price']) ?>" required min="0" step="1" placeholder="e.g. 250">
+            <input class="of-input" type="number" id="price" name="price" value="<?= e((string) $form['price']) ?>" required min="0.01" step="0.01" placeholder="e.g. 250">
         </div>
         <div class="of-field">
             <label class="of-label" for="category">Category</label>
