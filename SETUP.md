@@ -26,3 +26,8 @@ Open http://localhost:8000 (document root is the `public/` folder; `config/` and
 | Student | ayesha@forkfind.test   | Student@1234 |
 
 Regenerate sample data with fresh hashes: `php database/sample_data.php`
+
+The demo images are committed under `public/uploads/` and their filenames are
+seeded in `database/sample_data.sql`. Keep that folder when copying or
+deploying the project; otherwise the database will contain image names whose
+files are missing.
