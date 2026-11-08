@@ -35,12 +35,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[] = 'Description can be at most 500 characters.';
     }
 
-    // NEW optional photo upload (checked and saved by saveUploadedImage()).
+    // A cafeteria must have an image. Existing images may be retained when editing.
     $newImage = null;
     if (!$errors) {
         [$newImage, $imageError] = saveUploadedImage('image');
         if ($imageError !== null) {
             $errors[] = $imageError;
+        } elseif ($newImage === null && empty($cafe['image'])) {
+            $errors[] = 'A cafeteria image is required.';
         }
     }
 
@@ -121,9 +123,9 @@ require __DIR__ . '/../../includes/header.php';
             <span class="of-label">Cafeteria image</span>
             <div class="of-image">
                 <img class="of-preview" id="image-preview" src="<?= e(cafeImage($cafe)) ?>" alt="Current cafeteria image">
-                <input class="visually-hidden of-file-input" type="file" id="image" name="image" accept="image/jpeg,image/png,image/webp">
+                <input class="visually-hidden of-file-input" type="file" id="image" name="image" accept="image/jpeg,image/png,image/webp"<?= empty($cafe['image']) ? ' required' : '' ?>>
                 <label class="mr-btn of-file" for="image">Change Image</label>
-                <p class="of-hint" id="image-note">Current image &middot; <?= !empty($cafe['image']) ? e($cafe['image']) : 'default photo' ?>. JPG, PNG or WebP, up to 2 MB.</p>
+                <p class="of-hint" id="image-note"><?= !empty($cafe['image']) ? 'Current image &middot; ' . e($cafe['image']) . '. ' : '' ?>JPG, PNG or WebP, up to 2 MB. A cafeteria image is required.</p>
             </div>
         </div>
 

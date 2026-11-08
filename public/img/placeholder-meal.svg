@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 404 218" role="img" aria-labelledby="title desc">
+  <title id="title">Meal image unavailable</title>
+  <desc id="desc">A fork and leaf icon on a cream background</desc>
+  <rect width="404" height="218" fill="#FDF9F0"/>
+  <g fill="none" stroke="#1F4D3A" stroke-linecap="round" stroke-linejoin="round" stroke-width="7">
+    <path d="M166 64v48c0 12 9 21 21 21s21-9 21-21V64M176 64v35M187 64v35M198 64v35"/>
+    <path d="M187 133v39"/>
+    <path d="M229 171c-3-47 20-78 66-91 3 43-20 78-66 91Z" fill="#1F4D3A"/>
+    <path d="M232 166c17-25 34-48 54-69" stroke="#FDF9F0" stroke-width="4"/>
+  </g>
+</svg>

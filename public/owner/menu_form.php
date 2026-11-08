@@ -51,12 +51,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[] = 'Description can be at most 500 characters.';
     }
 
-    // NEW optional photo upload (checked and saved by saveUploadedImage()).
+    // A meal must have an image. Existing images may be retained when editing.
     $newImage = null;
     if (!$errors) {
         [$newImage, $imageError] = saveUploadedImage('image');
         if ($imageError !== null) {
             $errors[] = $imageError;
+        } elseif ($newImage === null && ($itemId === null || empty($existing['image']))) {
+            $errors[] = 'A food image is required.';
         }
     }
 
@@ -143,14 +145,14 @@ require __DIR__ . '/../../includes/header.php';
         </div>
 
         <div class="of-field">
-            <span class="of-label">Food image (optional)</span>
+            <span class="of-label">Food image<?= !$existing || empty($existing['image']) ? '' : ' (optional)' ?></span>
             <div class="of-image">
                 <?php if ($existing): ?>
                     <img class="of-preview" id="image-preview" src="<?= e(mealImage($existing)) ?>" alt="Current meal image">
                 <?php endif; ?>
-                <input class="visually-hidden of-file-input" type="file" id="image" name="image" accept="image/jpeg,image/png,image/webp">
+                <input class="visually-hidden of-file-input" type="file" id="image" name="image" accept="image/jpeg,image/png,image/webp"<?= !$existing || empty($existing['image']) ? ' required' : '' ?>>
                 <label class="mr-btn of-file" for="image"><?= $existing ? 'Change Image' : 'Choose Image' ?></label>
-                <p class="of-hint" id="image-note">JPG, PNG or WebP, up to 2 MB. Use a clear, natural food photograph.</p>
+                <p class="of-hint" id="image-note">JPG, PNG or WebP, up to 2 MB. A food image is required.</p>
             </div>
         </div>
 
